@@ -101,7 +101,7 @@ myapp_processed_ops_total 1995
 You can clone the k8s memuser advanced repo above and build the application yourself, or you can use the included deployment files 
 
 ```sh
-$ oc create new-project cmstest
+$ oc new-project cmstest
 Now using project "cmstest" 
 $ oc create -f cms-deployment.yaml
 service/memuser-svc created
