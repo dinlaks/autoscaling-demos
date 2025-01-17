@@ -168,9 +168,11 @@ We now have an application deployed in OpenShift and we are monitoring ith with 
 
 ## Creating a ScaledObject
 
-In order to create a ScaledObject using the built in OpenShift Prometheus service, we need three things:
+In order to create a ScaledObject using the built-in OpenShift Prometheus service, we need the following things:
 
-* A service account to authenticate to Prometheus with
+* A service account to authenticate to Prometheus
+* A secret that generates a token for service account
+* A role for the service account
 * A TriggerAuthentication Object
 * A ScaledObject 
 
@@ -181,6 +183,21 @@ Start by creating a service account in the `cmstest` Namespace:
 ```sh
 $ oc project cmstest
 $ oc create serviceaccount kedasa
+```
+Create a secret file 'secret-kedasa.yml' to generate a service account token:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kedasa-token
+  annotations:
+    kubernetes.io/service-account.name: kedasa 
+type: kubernetes.io/service-account-token
+```
+
+```sh
+$ oc create -f secret-kedasa.yml 
 $ oc describe sa/kedasa
 Name:                kedasa
 Namespace:           cmstest
@@ -188,7 +205,7 @@ Labels:              <none>
 Annotations:         <none>
 Image pull secrets:  kedasa-dockercfg-f8vsz
 Mountable secrets:   kedasa-dockercfg-f8vsz
-Tokens:              kedasa-token-2gltj
+Tokens:              kedasa-token
 Events:              <none>
 ```
 
