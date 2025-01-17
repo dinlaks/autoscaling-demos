@@ -324,6 +324,12 @@ spec:
 
 We now need a way to increase the rate of traffic going to our application. For this we will use [siege](https://github.com/JoeDog/siege). Run `siege` against the URL for the application and leave it running. This will create traffic to the test site, and start to drive up HTTP requests.
 
+I have created my own siege container to use for this purpose 
+
+```sh
+podman run -it quay.io/dlakshma/siege:latest
+```
+
 ```sh
 $ siege http://memuser-svc-cmstest.apps.test.example.com
 ```
